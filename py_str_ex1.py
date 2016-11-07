@@ -13,3 +13,12 @@ print
 
 print "{:>30} {:>30} {:>30} {:>30}".format(name1, name2, name3, name4)
 print
+
+print "*" *50
+print
+print "{:>30}".format(name1)
+print "{:>30}".format(name2)
+print "{:>30}".format(name3)
+print "{:>30}".format(name4)
+print
+print "*" *50
