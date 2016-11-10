@@ -1,0 +1,17 @@
+---
+- name: Configure IP Addresses
+  hosts: nxos2
+  tasks:
+    - name: Configure IP Addresses
+      nxos_ip_interface:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        transport: nxapi
+        interface: "{{ item.intf }}"
+        version: v4
+        state: present
+        addr: "{{ item.addr }}"
+        mask: 30 
+      with_items:
+        - {intf: Ethernet 2/4, addr: 10.1.2.2}
