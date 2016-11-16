@@ -1,0 +1,17 @@
+---
+
+- name: Arista-Ansible Exercise1
+  hosts: pynet-sw1
+
+  tasks:
+    - name: Create VLANs
+      eos_vlan: name={{ item.vlan_name }} vlanid={{ item.vlan_id }}
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+      with_items:
+        - {vlan_name: Test_VLAN_1, vlan_id: 157}
+        - {vlan_name: Test_VLAN_2, vlan_id: 158}
+        - {vlan_name: Test_VLAN_3, vlan_id: 159}

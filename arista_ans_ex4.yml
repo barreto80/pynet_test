@@ -1,0 +1,33 @@
+---
+
+- name: Arista-Ansible Exercise4
+  hosts: pynet-sw1
+
+  tasks:
+    - name: Configure Ethernet3 for Access mode, VLAN1
+      eos_switchport: name=Ethernet3 mode=access access_vlan=1 trunk_allowed_vlans=1-4094
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+    - name: Reset Ethernet3 description to default
+      eos_interface: name=Ethernet3 description=''
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+
+    - name: Remove VLANs
+      eos_vlan: name={{item.name}} vlanid={{item.vlanid}} state=absent
+            username={{ eapi_username }}
+            password={{ eapi_password }}
+            host={{ eapi_hostname }}
+            port={{ eapi_port }}
+            transport=https
+      with_items:
+        - {name: Test_VLAN_1, vlanid: 157}
+        - {name: Test_VLAN_2, vlanid: 158}
+        - {name: Test_VLAN_3, vlanid: 159}
