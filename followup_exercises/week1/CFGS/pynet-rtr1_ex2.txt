@@ -1,0 +1,58 @@
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+!
+!
+hostname pynet-rtr1
+hostname pynet-rtr1
+hostname pynet-rtr1
+hostname pynet-rtr1
+!
+!
+ip default-gateway 10.10.10.1
+!
+!
+!Including interfaces based on the model of the device
+!
+!
+interface GigabitEthernet0/0
+ no ip address
+!
+interface GigabitEthernet0/1
+ no ip address
+!
+interface GigabitEthernet0/2
+ ip address 10.10.10.57 255.255.255.128
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/0
+ switchport
+ no ip address
+!
+interface GigabitEthernet0/0/1
+ switchport
+ no ip address
+!
+interface GigabitEthernet0/0/2
+ switchport
+ no ip address
+!
+interface GigabitEthernet0/0/3
+ switchport
+ no ip address
+!
+interface loopback1
+ no ip address
+!
+!
+interface Management1
+ description niiii
+!
+line con 0
+line vty 0 4 
+ login
+line vty 5 15
+ login
+!
+!
+end

@@ -1,0 +1,30 @@
+interface GigabitEthernet0/0
+ no ip address
+!
+interface GigabitEthernet0/1
+ no ip address
+!
+interface GigabitEthernet0/2
+ ip address {{ item.ip_addr }} {{ item.netmask }}
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/0
+ switchport
+ no ip address
+!
+interface GigabitEthernet0/0/1
+ switchport
+ no ip address
+!
+interface GigabitEthernet0/0/2
+ switchport
+ no ip address
+!
+interface GigabitEthernet0/0/3
+ switchport
+ no ip address
+!
+interface loopback1
+ no ip address
+

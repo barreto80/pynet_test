@@ -1,0 +1,45 @@
+{% macro intf_trunk(native_vlan=1, trunk_allowed_vlans=1) -%}
+ switchport mode trunk
+ switchport trunk native vlan {{ native_vlan }}
+ switchport trunk allowed vlan {{ trunk_allowed_vlans }}
+{%- endmacro %}
+{% macro intf_access(vlan=1, voice_vlan=100) -%}
+ switchport mode access
+ switchport access vlan {{ vlan }}
+ switchport voice vlan {{ voice_vlan }}
+{%- endmacro %}
+!
+!
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+!
+!
+{% include 'hostname.j2' %}
+!
+!
+ip default-gateway {{item.default_gateway}}
+!
+!
+!Including interfaces based on this FOR+IF logic below:
+!
+!
+{% for intf in item.interfaces %}
+interface {{ intf.name }}
+ no ip address
+{% if intf.switchport_mode == 'trunk' %}
+ {{ intf_trunk(native_vlan=1, trunk_allowed_vlans="1,10,610") }}
+{% elif intf.switchport_mode == 'access' %}
+ {{ intf_access(vlan=10, voice_vlan=610) }}
+{% endif %}
+!
+{% endfor %}
+!
+!
+line con 0
+line vty 0 4 
+ login
+line vty 5 15
+ login
+!
+!
+end

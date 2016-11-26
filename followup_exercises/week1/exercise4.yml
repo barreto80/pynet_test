@@ -1,0 +1,26 @@
+---
+
+- name: Include statement to include one template in another template
+  hosts: localhost
+
+  tasks:
+    - name: Template config file
+      template: src=rtr_template_ex4.j2 dest=CFGS/{{item.hostname}}_ex4.txt
+      with_items:
+        - {hostname: pynet-rtr1,
+           default_gateway: 10.10.10.1,
+           interfaces: [
+            {name: GigabitEthernet0/0/0, switchport_mode: access},
+            {name: GigabitEthernet0/0/1, switchport_mode: access},
+            {name: GigabitEthernet0/0/2, switchport_mode: trunk},
+            {name: GigabitEthernet0/0/3, switchport_mode: trunk},
+           ]}
+        - {hostname: pynet-rtr2,
+           default_gateway: 10.10.20.1,
+           interfaces: [
+            {name: FastEthernet0, switchport_mode: access},
+            {name: FastEthernet1, switchport_mode: access},
+            {name: FastEthernet2, switchport_mode: access},
+            {name: FastEthernet3, switchport_mode: trunk},
+            {name: FastEthernet4, switchport_mode: trunk},
+           ]}

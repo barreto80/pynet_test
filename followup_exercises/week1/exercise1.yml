@@ -1,0 +1,11 @@
+---
+
+- name: Include statement to include one template in another template
+  hosts: localhost
+
+  tasks:
+    - name: Template config file
+      template: src=rtr_template_ex1.j2 dest=CFGS/{{item.hostname}}_ex1.txt
+      with_items:
+        - {hostname: pynet-rtr1, default_gateway: 10.10.10.1, mgmt_descr: niiii}
+        - {hostname: pynet-rtr2, default_gateway: 10.10.20.1, mgmt_descr: spam and eggs}

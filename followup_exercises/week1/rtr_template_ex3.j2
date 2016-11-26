@@ -1,0 +1,38 @@
+{% macro intf_trunk(native_vlan=1, trunk_allowed_vlans=1) -%}
+ switchport mode trunk
+ switchport trunk native vlan {{ native_vlan }}
+ switchport trunk allowed vlan {{ trunk_allowed_vlans }}
+{%- endmacro %}
+{% macro intf_access(vlan=1) -%}
+ switchport mode access
+ switchport access vlan {{ vlan }}
+{%- endmacro %}
+!
+!
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+!
+!
+{% include 'hostname.j2' %}
+!
+!
+ip default-gateway {{item.default_gateway}}
+!
+!
+!Including interfaces based on the model of the device
+!
+!
+{% include item.model_interfaces %}
+!
+!
+interface Management1
+ description {{item.mgmt_descr}}
+!
+line con 0
+line vty 0 4 
+ login
+line vty 5 15
+ login
+!
+!
+end
